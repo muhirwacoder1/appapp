@@ -1,0 +1,10 @@
+import { CombinedRegisterForm } from "@/components/combined-register-form"
+
+export default function RegisterInsolePage() {
+  return (
+    <div className="p-6 md:p-10">
+      <h1 className="text-3xl font-bold mb-6">Register New Insole</h1>
+      <CombinedRegisterForm />
+    </div>
+  )
+}

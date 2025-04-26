@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foot Pressure API Server</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    h1 {
+      color: #2563eb;
+    }
+    .endpoint {
+      background-color: #f3f4f6;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .endpoint h2 {
+      margin-top: 0;
+    }
+    code {
+      background-color: #e5e7eb;
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+    .test-button {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .test-button:hover {
+      background-color: #1d4ed8;
+    }
+    #result {
+      margin-top: 20px;
+      background-color: #f3f4f6;
+      padding: 15px;
+      border-radius: 8px;
+      white-space: pre-wrap;
+      font-family: monospace;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Foot Pressure API Server</h1>
+  <p>This server provides API endpoints for the Foot Pressure Monitoring application.</p>
+  
+  <div class="endpoint">
+    <h2>Latest Health Data</h2>
+    <p>Endpoint: <code>/api/health-data</code></p>
+    <p>Returns the latest foot pressure and health statistics.</p>
+    <button class="test-button" onclick="testLatestData()">Test Endpoint</button>
+  </div>
+  
+  <div class="endpoint">
+    <h2>Historical Health Data</h2>
+    <p>Endpoint: <code>/api/historical-data</code></p>
+    <p>Returns 24 hours of historical foot pressure and health statistics.</p>
+    <button class="test-button" onclick="testHistoricalData()">Test Endpoint</button>
+  </div>
+  
+  <div id="result"></div>
+  
+  <script>
+    async function testLatestData() {
+      const resultDiv = document.getElementById('result');
+      resultDiv.style.display = 'block';
+      resultDiv.textContent = 'Loading...';
+      
+      try {
+        const response = await fetch('/api/health-data');
+        const data = await response.json();
+        resultDiv.textContent = JSON.stringify(data, null, 2);
+      } catch (error) {
+        resultDiv.textContent = `Error: ${error.message}`;
+      }
+    }
+    
+    async function testHistoricalData() {
+      const resultDiv = document.getElementById('result');
+      resultDiv.style.display = 'block';
+      resultDiv.textContent = 'Loading...';
+      
+      try {
+        const response = await fetch('/api/historical-data');
+        const data = await response.json();
+        resultDiv.textContent = JSON.stringify(data, null, 2).substring(0, 1000) + '... (truncated)';
+      } catch (error) {
+        resultDiv.textContent = `Error: ${error.message}`;
+      }
+    }
+  </script>
+</body>
+</html>
+
