@@ -26,6 +26,7 @@ import {
   DialogClose
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
+import { supabaseClient } from '@/lib/supabaseClient'
 
 // Mock notifications data
 const notifications = [
@@ -73,9 +74,9 @@ export function FloatingIsland() {
     setNotificationsList(notificationsList.map(n => ({ ...n, read: true })))
   }
   
-  const handleLogout = () => {
-    // Redirect to Google.com
-    window.location.href = "https://www.google.com"
+  const handleLogout = async () => {
+    await supabaseClient.auth.signOut()
+    router.push('/signup')
   }
 
   const navigateToProfile = () => {

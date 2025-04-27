@@ -31,13 +31,14 @@ export function RealTimeMonitor() {
     toe: 120,
     heartRate: 67,
     temperature: 36.8,
-    timestamp: new Date().toISOString(),
+    timestamp: "",
     heelStatus: "No data",
     middleStatus: "No data",
     toeStatus: "No data"
   })
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [timeString, setTimeString] = useState("")
 
   const fetchLatestData = async () => {
     if (!isActive) return
@@ -75,6 +76,13 @@ export function RealTimeMonitor() {
     // Clean up interval on unmount
     return () => clearInterval(interval)
   }, [isActive])
+
+  useEffect(() => {
+    // Update display time after data timestamp changes
+    if (data.timestamp) {
+      setTimeString(new Date(data.timestamp).toLocaleTimeString())
+    }
+  }, [data.timestamp])
 
   return (
     <div>
@@ -175,9 +183,14 @@ export function RealTimeMonitor() {
           </Badge>
         </div>
         <p className="text-gray-500">
-          {isActive
-            ? `Real-time monitoring active. Data updates every 2 seconds. Last update: ${new Date(data.timestamp).toLocaleTimeString()}`
-            : "Monitoring is paused. Click 'Inactive' to resume."}
+          {isActive ? (
+            <>
+              Real-time monitoring active. Data updates every 2 seconds.
+              {timeString && <> Last update: {timeString}</>}
+            </>
+          ) : (
+            "Monitoring is paused. Click 'Inactive' to resume."
+          )}
         </p>
       </section>
     </div>
