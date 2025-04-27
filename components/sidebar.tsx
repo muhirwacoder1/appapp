@@ -70,7 +70,7 @@ export function Sidebar() {
           variant="outline"
           size="icon"
           onClick={toggleSidebar}
-          className="absolute -right-4 top-6 h-8 w-8 rounded-full border bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md z-10 hover:from-blue-600 hover:to-blue-700 border-none md:hidden"
+          className="absolute -right-4 top-1/2 -translate-y-1/2 h-8 w-8 rounded-full border bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md z-10 hover:from-blue-600 hover:to-blue-700 border-none hidden md:flex"
           aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
           {collapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
